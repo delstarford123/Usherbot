@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Collection for UsherBot</title>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <script src="https://source.unsplash.com/featured/?nature,water"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            margin: 10 auto;
+            padding: 20px;
+            background:transparent;
+            border-radius: 8px;
+            justify-content: center;
+            
+              }
+        label {
+            margin-top: 10px;
+            font-weight: bold;
+            font-style: italic;
+            font-weight: bolder;
+            
+        }
+        input, button {
+            margin-top: 5px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4008f8;
+            
+            color: white;
+            cursor: pointer;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: larger;
+            font-weight: bold;
+           
+            ;
+        }
+        button:hover {
+            background-color:transparent;
+        }
+        .camera-section {
+            margin-top: 20px;
+        }
+        .camera-view {
+            align-content: center;
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 0 auto;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 5px solid #007BFF;
+        }
+        video {
+            align-self: center;
+            width: 300px;
+            height: 300px;
+            object-fit: cover;
+            align-content: center;
+        }
+        .capture-button {
+            margin-top: 20px;
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #ffef0a;
+            align-items: center;
+            align-content: center;
+            position: relative;
+            align-self: center;
+        }
+        .captured-images {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-around;
+        }
+        .captured-images img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 2px solid #007BFF;
+        }
+        </style>
+        <style>
+            nav {
+               display: flex;
+               justify-content: center;
+               background-color: #f4f4f4;
+               padding: 30px;
+               text-decoration: none;
+               align-self: center;
+            }
+            nav a {
+               text-decoration: none;
+               color: #333;
+               margin: 0 15px;
+               font-size: 18px;
+            }
+            nav a:hover {
+               color: #007BFF;
+            }
+         </style>
+    </head>
+    <body style="background-image: url(https://images.unsplash.com/photo-1590523278191-995cbcda646b?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjEyMDd9);">
+        <div class="links">
+            <nav>
+           
+            <a href="index.html" style="text-decoration: none;">Home</a>
+            <a href="about userbot.html" style="text-decoration: none;">About Usherbot</a>
+            <a href="contact me.html" style="text-decoration: none;">Contact</a>
+            <a href="blog.html" style="text-decoration: none;">Blog</a>
+            <a href="Data collect.html" style="text-decoration: none;">Collect Data</a>
+            </nav>
+        </div>
+        <div class="container"></div>
+        <h1>Data Collection for UsherBot</h1>
+        <form style="align-content: center;" id="dataForm" >
+            <label for="name" style="color: #1e07f2;">Full Name:</label>
+            <input type="text" style="color: lime;" id="name" name="name" max="50" required>
+
+            <label for="location"style="color: #1e07f2;">Location of Stay:</label>
+            <input type="text"style="color: lime;" id="location" name="location" max="10" required>
+
+            <label for="yearOfStudy" style="color: #1606f1;">Year of Study:</label>
+            <input type="number" style="color: lime;" id="yearOfStudy" name="yearOfStudy" max="10" required>
+
+            <label for="registrationNumber" style="color: #3702f5;" >Registration Number:</label>
+            <input type="text" style="color: lime;" id="registrationNumber" name="registrationNumber" required>
+            <label for="phoneNumber" style="color: #270aff;">Phone Number:</label>
+            <input type="tel" style="color: lime;" id="phoneNumber" name="phoneNumber" required>
+
+            
+                <video id="video" autoplay ></video>
+            </div>
+            <button type="button" class="capture-button" onclick="captureImage('center')">Capture Center</button>
+            <button type="button" class="capture-button" onclick="captureImage('left')">Capture Left</button>
+            <button type="button" class="capture-button" onclick="captureImage('right')">Capture Right</button>
+            <div class="captured-images">
+                <img id="centerImage" alt="Center Face" />
+                <img id="leftImage" alt="Left Face" />
+                <img id="rightImage" alt="Right Face" />
+            </div>
+            </div>
+
+            <button type="submit" style="width: 100%; height: 50px; padding: 50px;align-self: center;">Submit</button>
+        </form>
+        </div>
+
+        <script>
+        const video = document.getElementById('video');
+        const centerImage = document.getElementById('centerImage');
+        const leftImage = document.getElementById('leftImage');
+        const rightImage = document.getElementById('rightImage');
+
+        // Access the device camera
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => {
+            video.srcObject = stream;
+            })
+            .catch(error => {
+            console.error("Error accessing the camera:", error);
+            alert("Unable to access the camera. Please check your device settings.");
+            });
+
+        function captureImage(position) {
+            const canvas = document.createElement('canvas');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            const context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            // Convert the captured image to a data URL (base64)
+            const imageData = canvas.toDataURL('image/png');
+            console.log(`Captured ${position} Image Data:`, imageData);
+
+            // Display the captured image in the corresponding placeholder
+            if (position === 'center') {
+            centerImage.src = imageData;
+            } else if (position === 'left') {
+            leftImage.src = imageData;
+            } else if (position === 'right') {
+            rightImage.src = imageData;
+            }
+
+            alert(`${position.charAt(0).toUpperCase() + position.slice(1)} image captured successfully!`);
+        }
+
+        document.getElementById('dataForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            alert("Thank you ,Data submitted successfully!");
+            // Placeholder for form submission logic
+        });
+        </script>
+    </body>
+    </html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>UsherBot - Digital Usher</title>
+     <!-- Firebase CDN -->
+     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js"></script>
+     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js"></script>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+     
+     <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        header {
+            background-color: #6200ea;
+            color: white;
+            padding: 20px;
+        }
+        .founder-section {
+            margin: 20px;
+        }
+        .founder-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .links {
+            margin: 20px;
+        }
+        .links a {
+            text-decoration: none;
+            color: #6200ea;
+            margin: 0 10px;
+            font-weight: bold;
+        }
+        .animated-text {
+            font-size: 24px;
+            color: #0408ff;
+            margin-top: 20px;
+            animation: fadeIn 500ms ease-in-out;
+            font-family: 'Courier New', Courier, monospace;
+        }
+      </style>
+    <style>
+        nav {
+           display: flex;
+           justify-content: center;
+           background-color: #f4f4f4;
+           padding: 10px;
+        }
+        nav a {
+           text-decoration: none;
+           color: #333;
+           margin: 0 15px;
+           font-size: 18px;
+        }
+        nav a:hover {
+           color: #007BFF;
+        }
+     </style>
+   </head>
+<body>
+    <header>
+        <h1>Welcome to UsherBot</h1>
+        <p>Your Digital Usher for Seamless Experiences</p>
+    </header>
+
+    <div class="founder-section">
+        <h2>Meet the Founder</h2>
+        <img src="1716489037913.jpg" alt="Founder Image" class="founder-image" style="height: 100px; width: 100px;">
+        <p>Delstarford - Visionary behind UsherBot</p>
+    </div>
+
+    <div class="animated-text" id="animatedText"></div>
+
+    <div class="links">
+        <nav></nav>
+        <h3>Explore More</h3>
+        <a href="about userbot.html">About Usherbot</a>
+        
+        <a href="contact me.html">Contact</a>
+        <a href="blog.html">Blog</a>
+        <a href="Data collect.html">Collect Data</a>
+        <nav></nav>
+    </div>
+
+    <script>
+        const words = ["Welcome", "to", "UsherBot,", "your", "Digital", "Usher!"];
+        let index = 0;
+        const animatedText = document.getElementById("animatedText");
+
+        function animateText() {
+            if (index < words.length) {
+                animatedText.textContent += words[index] + " ";
+                index++;
+                setTimeout(animateText, 500);
+            }
+        }
+
+        animateText();
+    </script>
+</body>
+</html>

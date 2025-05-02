@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Users</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .message {
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #e0ffe0;
+            border: 1px solid #00b300;
+            border-radius: 5px;
+            color: #006600;
+        }
+        .contact-buttons a {
+            display: inline-block;
+            margin: 10px 5px;
+            padding: 10px 15px;
+            text-decoration: none;
+            color: white;
+            border-radius: 5px;
+        }
+        .sms {
+            background-color: #007bff;
+        }
+        .whatsapp {
+            background-color: #25d366;
+        }
+    </style>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Contact Users</h1>
+        <div id="message-container"></div>
+    </div>
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            databaseURL: "https://userbot-e8ac4-default-rtdb.firebaseio.com/",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "655218028403",
+            appId: "userbot-e8ac4"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        // Simulated collected data
+        const collectedData = {
+            phoneNumber: "+254707605751",
+            name: "John Doe"
+        };
+
+        // Function to check user data in Firebase
+        function checkUserData() {
+            const messageContainer = document.getElementById('message-container');
+            firebase.database().ref('users').once('value', (snapshot) => {
+                let userFound = false;
+
+                snapshot.forEach((childSnapshot) => {
+                    const userData = childSnapshot.val();
+                    if (userData.phoneNumber === collectedData.phoneNumber && userData.name === collectedData.name) {
+                        userFound = true;
+
+                        // Display welcoming message
+                        messageContainer.innerHTML = `
+                            <div class="message">
+                                Welcome back, ${userData.name}!
+                            </div>
+                            <div class="contact-buttons">
+                                <a href="sms:${userData.phoneNumber}" class="sms">Send SMS</a>
+                                <a href="https://wa.me/${userData.phoneNumber.replace('+', '')}" target="_blank" class="whatsapp">Send WhatsApp</a>
+                            </div>
+                        `;
+                    }
+                });
+
+                if (!userFound) {
+                    messageContainer.innerHTML = '';
+                }
+            });
+        }
+
+        // Call the function to check user data
+        checkUserData();
+    </script>
+</body>
+</html>

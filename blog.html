@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Page</title>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .post {
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+        }
+        .post:last-child {
+            border-bottom: none;
+        }
+        .post h3 {
+            margin: 0;
+        }
+        .post p {
+            margin: 5px 0;
+        }
+        .reply {
+            margin-left: 20px;
+            background: #f9f9f9;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .form-group button {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .form-group button:hover {
+            background-color: #555;
+        }
+    </style>
+    <style>
+        nav {
+           display: flex;
+           justify-content: center;
+           background-color: #f4f4f4;
+           padding: 10px;
+        }
+        nav a {
+           text-decoration: none;
+           color: #333;
+           margin: 0 15px;
+           font-size: 18px;
+        }
+        nav a:hover {
+           color: #007BFF;
+        }
+     </style>
+</head>
+<body>
+    <div class="links">
+        <nav></nav>
+        <a href="index.html" target="_blank" style="text-decoration: none;">Home</a>
+        
+        <a href="about userbot.html" target="_blank" style="text-decoration: none;" >About Usherbot</a>
+        
+        <a href="contact me.html" style="text-decoration: none;" target="_blank">Contact</a>
+        <a href="blog.html" style="text-decoration: none;" target="_blank">Blog</a>
+        <a href="Data collect.html" style="text-decoration: none;" target="_blank">Collect Data</a>
+        <nav></nav>
+    </div>
+    <header>
+        <h1>Blog Page</h1>
+    </header>
+    <div class="container">
+        <div id="posts"></div>
+        <div class="form-group">
+            <label for="postContent">Write a Post:</label>
+            <textarea id="postContent" rows="4" placeholder="Write your post here..."></textarea>
+            <button onclick="addPost()">Post</button>
+        </div>
+    </div>
+
+    <script>
+        const postsContainer = document.getElementById('posts');
+
+        function addPost() {
+            const content = document.getElementById('postContent').value;
+            if (content.trim() === '') {
+                alert('Post content cannot be empty!');
+                return;
+            }
+
+            const postDiv = document.createElement('div');
+            postDiv.className = 'post';
+
+            const postContent = document.createElement('p');
+            postContent.textContent = content;
+
+            const replyButton = document.createElement('button');
+            replyButton.textContent = 'Reply';
+            replyButton.onclick = () => addReply(postDiv);
+
+            postDiv.appendChild(postContent);
+            postDiv.appendChild(replyButton);
+            postsContainer.appendChild(postDiv);
+
+            document.getElementById('postContent').value = '';
+        }
+
+        function addReply(postDiv) {
+            const replyContent = prompt('Write your reply:');
+            if (replyContent && replyContent.trim() !== '') {
+                const replyDiv = document.createElement('div');
+                replyDiv.className = 'reply';
+                replyDiv.textContent = replyContent;
+                postDiv.appendChild(replyDiv);
+            }
+        }
+    </script>
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            databaseURL: "YOUR_DATABASE_URL",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        // Function to save blog post to Firebase
+        function addPost() {
+            const content = document.getElementById('postContent').value;
+            if (content.trim() === '') {
+                alert('Post content cannot be empty!');
+                return;
+            }
+
+            const postId = database.ref('posts').push().key;
+            const postData = {
+                id: postId,
+                content: content,
+                timestamp: new Date().toISOString()
+            };
+
+            database.ref('posts/' + postId).set(postData, (error) => {
+                if (error) {
+                    alert('Error saving post: ' + error.message);
+                } else {
+                    displayPost(postData);
+                    document.getElementById('postContent').value = '';
+                }
+            });
+        }
+
+        // Function to display a post
+        function displayPost(postData) {
+            const postDiv = document.createElement('div');
+            postDiv.className = 'post';
+
+            const postContent = document.createElement('p');
+            postContent.textContent = postData.content;
+
+            const replyButton = document.createElement('button');
+            replyButton.textContent = 'Reply';
+            replyButton.onclick = () => addReply(postDiv);
+
+            postDiv.appendChild(postContent);
+            postDiv.appendChild(replyButton);
+            postsContainer.appendChild(postDiv);
+        }
+
+        // Load posts from Firebase
+        database.ref('posts').on('value', (snapshot) => {
+            postsContainer.innerHTML = '';
+            snapshot.forEach((childSnapshot) => {
+                const postData = childSnapshot.val();
+                displayPost(postData);
+            });
+        });
+    </script>
+</body>
+</html></html>

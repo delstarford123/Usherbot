@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About User Bot</title>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 1rem 0;
+            text-align: center;
+        }
+
+        main {
+            padding: 2rem;
+        }
+
+        .about-section {
+            margin-bottom: 2rem;
+        }
+
+        .about-section h2 {
+            color: #4CAF50;
+        }
+
+        .video-section {
+            margin-top: 2rem;
+        }
+
+        .video-section h2 {
+            color: #4CAF50;
+        }
+
+        .video-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 1rem;
+        }
+
+        .video-container video {
+            max-width: 100%;
+            height: auto;
+            border: 2px solid #4CAF50;
+            border-radius: 8px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem 0;
+            background-color: #4CAF50;
+            color: white;
+            margin-top: 2rem;
+        }
+    </style>
+    <style>
+        nav {
+           display: flex;
+           justify-content: center;
+           background-color: #f4f4f4;
+           padding: 10px;
+        }
+        nav a {
+           text-decoration: none;
+           color: #333;
+           margin: 0 15px;
+           font-size: 18px;
+        }
+        nav a:hover {
+           color: #007BFF;
+        }
+     </style>
+</head>
+<body>
+    <div class="links">
+        
+        <nav>
+      <a href="index.html">Home</a>
+        <a href="about userbot.html">About Us</a>
+        <a href="contact me.html">Contact</a>
+        <a href="blog.html">Blog</a>
+        <a href="Data collect.html">Collect Data</a>
+        </nav>
+    </div>
+    <header>
+        <h1>About User Bot</h1>
+    </header>
+    <main>
+        <section class="about-section">
+            <h2>What is User Bot?</h2>
+            <p>
+                User Bot is an intelligent bot designed and built by Delstarford to help  with various tasks, 
+                including registering attendees to events, collecting data of attendees, and providing helpful insights. 
+                It is built with advanced algorithms to ensure efficiency and accuracy.
+            </p>
+        </section>
+        <section class="video-section">
+            <h2>Introduction Video</h2>
+            <div class="video-container">
+                <video id="userbotVideo" style="height: 200px; width: 300px; " controls autoplay >
+                    <source src="VID_20240817_222920.mp4" type="video/mp4"  > 
+                    Your browser does not support the video tag.
+                    
+                </video>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 User Bot. All rights reserved.</p>
+    </footer>
+    <script>
+        // JavaScript to handle any additional functionality
+        document.addEventListener("DOMContentLoaded", () => {
+            const video = document.getElementById("userbotVideo");
+
+            if (!video) {
+                console.error("Video element not found!");
+            } else {
+                console.log("Video element loaded successfully.");
+            }
+        });
+    </script>
+</body>
+</html>

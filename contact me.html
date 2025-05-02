@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Me</title>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: transparent;
+            
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .contact-container {
+            text-align: center;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            align-self: center;
+        }
+        .contact-container h1 {
+            margin-bottom: 20px;
+            color: #444;
+        }
+        .contact-container a {
+            display: block;
+            margin: 10px 0;
+            padding: 10px 15px;
+            text-decoration: none;
+            color: #fff;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            align-self: self-start;
+        }
+        .contact-container a.whatsapp {
+            background-color: #25D366;
+        }
+        .contact-container a.whatsapp:hover {
+            background-color: #1da851;
+        }
+        .contact-container a.facebook {
+            background-color: #1877F2;
+        }
+        .contact-container a.facebook:hover {
+            background-color: #155dbb;
+        }
+    </style>
+    <style>
+        nav {
+           display: flex;
+           justify-content: center;
+           background-color: #f4f4f4;
+           padding: 10px;
+           align-self: flex-start;
+        }
+        nav a {
+           text-decoration: none;
+           color: #333;
+           margin: 0 15px;
+           font-size: 18px;
+        }
+        nav a:hover {
+           color: #007BFF;
+        }
+     </style>
+</head>
+<body>
+    
+    <div class="links">
+        <nav style="align-self: self-start;">
+       
+        <a href="index.html" style="text-decoration: none;">Home</a>
+        <a href="about userbot.html" style="text-decoration: none;">About Usherbot</a>
+        <a href="contact me.html" style="text-decoration: none;">Contact</a>
+        <a href="blog.html" style="text-decoration: none; ">Blog</a>
+        <a href="Data collect.html" style="text-decoration: none;" >Collect Data</a>
+        </nav>
+    </div>
+    
+    <div class="contact-container" >
+        <h1>Contact Me</h1>
+        <a href="https://wa.me/1234567890" target="_blank" class="whatsapp">Contact via WhatsApp</a>
+        <a href="https://facebook.com/yourprofile" target="_blank" class="facebook">Contact via Facebook</a>
+    </div>
+    <script>
+        // Replace the placeholders with your actual WhatsApp number and Facebook profile link
+        const whatsappLink = document.querySelector('.whatsapp');
+        const facebookLink = document.querySelector('.facebook');
+
+        whatsappLink.href = "https://wa.me/+254707605751"; // Replace with your WhatsApp number
+        facebookLink.href = "https://facebook.com/delstarfordisaiah"; // Replace with your Facebook profile link
+    </script>
+</body>
+</html>
